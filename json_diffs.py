@@ -70,9 +70,12 @@ def compare_dict(d1,d2):
             else:
                 # Compare the objects
                 if not compare_object(v, d2[k]):
-                    # Print only dictionary values
+                    # Print only values
                     if type(v) is not dict:
-                        print(f"The values in object {k} are different: {v} != {d2[k]}")
+                        if type(v) is list and type(v[0]) is dict:
+                            pass
+                        else:
+                            print(f"The values in object {k} are different: {v} != {d2[k]}")
                         
                     are_equal = False
                     
@@ -106,7 +109,7 @@ def compare_list(l1,l2):
         # Compare each element/object of the list
         for i in range(len(l1)):         
             if not compare_object(l1[i], l2[i]):            
-                return False   
+                are_equal = False   
             
     return are_equal
  
