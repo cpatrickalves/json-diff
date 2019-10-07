@@ -1,8 +1,8 @@
-# JSON Files Comparison
+# JSON Files Differences
 
-In this simple project I createad a Python script that compares two JSON files and shows their differences.
+In this simple project, I created a Python script that compares two JSON files and shows their differences.
 
-### usage:
+### How to use:
 
 ```
 #> python json_diffs.py examples\file01.json examples\file02.json
