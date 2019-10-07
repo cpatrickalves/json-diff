@@ -2,6 +2,8 @@
 
 In this simple project, I created a Python script that compares two JSON files and shows their differences.
 
+The script compares each JSON object, It doesn't compare file lines.
+
 ### How to use:
 
 ```
