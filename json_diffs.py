@@ -11,7 +11,7 @@ import json
 import sys
 
 # The main function
-def compare_object(j1,j2):
+def compare_object(j1, j2, pathTillNow=""):
     ''' Compares two JSON objects
 
     Parameters
@@ -25,21 +25,21 @@ def compare_object(j1,j2):
         Indicates whether j1 and j2 are equal
     '''
 
-    if type(j1) != type (j2):
+    if type(j1) != type(j2):
         print(f"The object type of {j1} and {j2} is different")
         return False
 
     elif type(j1) is dict:
-        return compare_dict(j1,j2)
+        return compare_dict(j1, j2, pathTillNow)
 
     elif type(j1) is list:
-        return compare_list(j1,j2)
+        return compare_list(j1, j2, pathTillNow)
 
     else:
         return j1 == j2
 
 
-def compare_dict(d1,d2):
+def compare_dict(d1, d2, pathTillNow=""):
     ''' Compares each key and value in input dictionaries
 
     Parameters
@@ -56,34 +56,33 @@ def compare_dict(d1,d2):
     # Default value
     are_equal = True
 
-    # Compare the lenghts
+    # Compare the lengths
     if len(d1) != len(d2):
-        print(f"The lenghts of {d1} and {d2} are different")
+        print(f"Failed at '{pathTillNow}': The lengths of '{d1}' and '{d2}' are different")
         return False
 
     else:
         # Compare the keys and values
-        for k,v in d1.items():
+        for k, v in d1.items():
             if not k in d2:
-                print(f"The key {k} was not found in {d2}")
+                print(f"Failed at '{pathTillNow}': The key {k} was not found in '{d2}'")
                 return False
             else:
                 # Compare the objects
-                if not compare_object(v, d2[k]):
+                if not compare_object(v, d2[k], pathTillNow+'/'+k):
                     # Print only values
                     if type(v) is not dict:
                         if type(v) is list and type(v[0]) is dict:
                             pass
                         else:
-                            print(f"The values in object {k} are different: {v} != {d2[k]}")
+                            print(f"Failed at '{pathTillNow}': The values in object '{k}' are different: '{v}' != '{d2[k]}'")
 
                     are_equal = False
 
     return are_equal
 
 
-
-def compare_list(l1,l2):
+def compare_list(l1, l2, pathTillNow=""):
     ''' Compares two lists
 
     Parameters
@@ -100,15 +99,15 @@ def compare_list(l1,l2):
     # Default value
     are_equal = True
 
-    # Compare the lenghts
+    # Compare the lengths
     if len(l1) != len(l2):
-        print(f"The lenghts of {l1} and {l2} are different")
+        print(f"Failed at '{pathTillNow}': The lengths of '{l1}' and '{l2}' are different")
         return False
 
     else:
         # Compare each element/object of the list
         for i in range(len(l1)):
-            if not compare_object(l1[i], l2[i]):
+            if not compare_object(l1[i], l2[i], pathTillNow):
                 are_equal = False
 
     return are_equal
